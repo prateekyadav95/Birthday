@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Lovely Sister!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            width: 20px;
+            height: 20px;
+            background: url('https://cdn.pixabay.com/photo/2013/07/12/12/58/star-146850_1280.png') no-repeat center/contain;
+            opacity: 0.8;
+            animation: sparkle-fade 1s linear forwards;
+        }
+        @keyframes sparkle-fade {
+            0% { opacity: 1; transform: scale(1);}
+            100% { opacity: 0; transform: scale(2);}
+        }
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 60px;
+            z-index: 10;
+            animation: floatBalloon 8s linear infinite;
+        }
+        @keyframes floatBalloon {
+            0% { bottom: -100px; }
+            100% { bottom: 110%; }
+        }
+    </style>
+    <script>
+        function playAudio() {
+            var audio = document.getElementById("myAudio");
+            audio.play();
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.addEventListener('click', function(e) {
+                let sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = (e.pageX - 10) + 'px';
+                sparkle.style.top = (e.pageY - 10) + 'px';
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 1000);
+            });
+            for(let i=0; i<7; i++) {
+                let balloon = document.createElement('img');
+                balloon.src = 'https://pngimg.com/uploads/balloon/balloon_PNG4951.png';
+                balloon.className = 'balloon';
+                balloon.style.left = (10 + Math.random()*80) + 'vw';
+                balloon.style.animationDelay = (Math.random()*8) + 's';
+                document.body.appendChild(balloon);
+            }
+        });
+    </script>
+</head>
+<body>
+    <audio height="100" width="100" id="myAudio" loop>
+        <source src="aud.mp3" type="audio/mp3" />
+        <embed height="100" width="100" src="aud.mp3" />
+    </audio>
+    <div id="particles-js"></div>
+    <div class="floating-hearts" id="floatingHearts"></div>
+    <div class="petals" id="petalsContainer"></div>
+    <div class="container">
+        <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+        </div>
+
+        <!-- Step 1: Greeting -->
+        <div class="step" id="step1">
+            <h1 class="glow-text" style="color:#ff69b4; font-family:'Dancing Script',cursive;">🎂 Happy Birthday, My Sweet Sister! 🎂</h1>
+            <p style="font-size:1.2em;">आज का दिन बहुत खास है क्योंकि मेरी सबसे प्यारी बहन का जन्मदिन है।</p>
+            <p>तैयार हो जाओ, तुम्हारे लिए एक जादुई सरप्राइज है!</p>
+            <img src="https://png.pngtree.com/png-vector/20250422/ourmid/pngtree-cute-girl-holding-birthday-cake-smiling-cheerfully-png-image_16067658.png" style="height: 200px;width: 200px;" alt="Sister Birthday">
+            <button class="btn" onclick="playAudio(); nextStep()">🎁 अपना गिफ्ट खोलो</button>
+        </div>
+
+        <!-- Step 2: Name Input -->
+        <div class="step" id="step2">
+            <h2>चलो इसे पर्सनल बनाते हैं</h2>
+            <p>अपना नाम लिखो प्यारी दीदी</p>
+            <input type="text" class="name-input" id="nameInput" placeholder="अपना नाम लिखें">
+            <button class="btn" onclick="saveName()">आगे बढ़ें</button>
+        </div>
+
+        <!-- Step 3: Heart Animation -->
+        <div class="step" id="step3">
+            <h2>आपके लिए, <span id="displayName">मेरी प्यारी दीदी</span></h2>
+            <p>दिल पर क्लिक करो</p>
+            <div class="heart" id="interactiveHeart" onclick="createHearts()"></div>
+            <div id="heartMessage" class="message-box">
+                <p>मेरी पागल बहन <span id="heartName">दीदी</span>।</p>
+            </div>
+            <button class="btn" onclick="nextStep()">तुम्हारे लिए खास संदेश</button>
+        </div>
+
+        <!-- Step 4: Birthday Message -->
+        <div class="step" id="step4">
+            <h2>मेरी तरफ से खास संदेश</h2>
+            <div class="photo-frame">
+                <img src="https://medias.artmajeur.com/standard/17262319_a-cutel-european-girl-full-bodycartoon-style-illustration-drawn-with-posca-markers-pretty-face-586679414-1.jpg?v=1738402496" alt="Beautiful Sister">
+            </div>
+            <div id="typedMessage" class="message-box">
+                <p class="typing-effect" id="typingText"></p>
+            </div>
+            <button class="btn" onclick="nextStep()">सरप्राइज देखें</button>
+        </div>
+
+        <!-- Step 5: Memory Lane -->
+        <div class="step" id="step5">
+            <h2>हमारी यादें</h2>
+            <p>कुछ पल जो हमेशा मेरे दिल में रहेंगे...</p>
+            <div class="memory-container">
+                <div class="polaroid">
+                    <img src="himani1.jpg" alt="Memory 1">
+                    <div class="polaroid-caption">तुम्हारी प्यारी फोटो</div>
+                </div>
+                <div class="polaroid">
+                    <img src="himani2.jpg" alt="Memory 2">
+                    <div class="polaroid-caption">दोनो बहनों की फोटो</div>
+                </div>
+            </div>
+            <button class="btn" onclick="nextStep()">आखिरी सरप्राइज</button>
+        </div>
+
+        <!-- Step 6: Final Wish -->
+        <div class="step" id="step6">
+            <h1 class="glow-text" style="color:#ff69b4;">🎉 हैप्पी बर्थडे, <span id="finalName">मेरी दीदी 💖</span>! 🎂</h1>
+            
+            <p>✨ भगवान करे तुम्हारी सारी ख्वाहिशें पूरी हों और तुम्हारी जिंदगी हमेशा खुशियों से भरी रहे ✨</p>
+            <p>🌟 तुम मेरी दुनिया की सबसे बड़ी खुशी हो, दीदी! 🌟</p>
+            <p>⏳ जल्दी मिलूंगा और तुम्हारा ये खास दिन साथ में सेलिब्रेट करूंगा! 🥰</p>
+            <p>💌 ढेर सारा प्यार, हमेशा तुम्हारे दोनो भाई... 💫</p>
+            <div class="signature">With love, always!</div>
+            <div class="social-share">
+                <div class="social-icon" onclick="shareOnSocial('facebook')" title="Share on Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="social-icon" onclick="shareOnSocial('twitter')" title="Share on Twitter">
+                    <i class="fab fa-twitter"></i>
+                </div>
+                <div class="social-icon" onclick="shareOnSocial('whatsapp')" title="Share on WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
